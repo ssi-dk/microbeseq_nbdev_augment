@@ -58,8 +58,8 @@ nbdev_new --repo $GIT_REPO_NAME --branch $TEMPLATE_GIT_BRANCH --user '$GIT_USER_
 nbdev_prepare; # also makes the package folder
 
 # Pull the files from the template repo
-wget --directory $GIT_REPO_NAME https://raw.githubusercontent.com/$TEMPLATE_GIT_REPO/$TEMPLATE_GIT_BRANCH/config.default.env;
-wget --directory $GIT_REPO_NAME https://raw.githubusercontent.com/$TEMPLATE_GIT_REPO/$TEMPLATE_GIT_BRANCH/config.default.yaml; 
+wget --directory $GIT_REPO_NAME/config https://raw.githubusercontent.com/$TEMPLATE_GIT_REPO/$TEMPLATE_GIT_BRANCH/config.default.env;
+wget --directory $GIT_REPO_NAME/config https://raw.githubusercontent.com/$TEMPLATE_GIT_REPO/$TEMPLATE_GIT_BRANCH/config.default.yaml; 
 wget -O $NBDEV_PROJECT_FOLDER/nbs/00_core.ipynb --directory nbs https://raw.githubusercontent.com/$TEMPLATE_GIT_REPO/$TEMPLATE_GIT_BRANCH/nbs/00_core.ipynb;
 wget -O $NBDEV_PROJECT_FOLDER/nbs/01_hello_world_example.ipynb --directory nbs https://raw.githubusercontent.com/$TEMPLATE_GIT_REPO/$TEMPLATE_GIT_BRANCH/nbs/01_hello_world_example.ipynb;
 wget -O $NBDEV_PROJECT_FOLDER/LICENSE https://raw.githubusercontent.com/$TEMPLATE_GIT_REPO/$TEMPLATE_GIT_BRANCH/LICENSE;
@@ -75,3 +75,8 @@ echo "console_scripts = \
 
 # replace the marker in the file $NBDEV_PROJECT_FOLDER/nbs/00_core.ipynb, it can occur multiple times
 sed -i '' "s/\$PACKAGE_NAME/$GIT_REPO_NAME/g" $NBDEV_PROJECT_FOLDER/nbs/00_core.ipynb;
+
+echo "include config/config.default.env" >> MANIFEST.in;
+echo "include config/config.default.yaml" >> MANIFEST.in;
+
+nbdev_prepare
