@@ -1,0 +1,15 @@
+{
+	// See https://go.microsoft.com/fwlink/?LinkId=827846 to learn about workspace recommendations.
+	// Extension identifier format: ${publisher}.${name}. Example: vscode.csharp
+	// List of extensions which should be recommended for users of this workspace.
+	"recommendations": [
+		"ms-python.python", // Microsoft's Python extension with rich support for Python development
+		"ms-toolsai.jupyter", // Provides Jupyter notebook support
+		"mhutchie.git-graph", // Provides a graphical representation of your Git repositories
+		"ms-vscode-remote.remote-ssh", // Allows you to use any remote machine with a SSH server as a development environment
+		"ms-python.black-formatter", // Integrates the Black Python code formatter
+		"ms-python.flake8", // Integrates the Flake8 Python code linter
+	],
+	// List of extensions recommended by VS Code that should not be recommended for users of this workspace.
+	"unwantedRecommendations": [],
+}
