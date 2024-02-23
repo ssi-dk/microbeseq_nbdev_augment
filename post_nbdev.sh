@@ -3,6 +3,21 @@
 # Ensure script fails on errors
 set -e
 
+# Check that the current folder is empty
+if [ "$(ls -A .)" ]; then
+    echo "Current directory is not empty, please run this in a blank directory"
+    # ask user if they want to clear current directory
+    read -p "Do you want to clear the current directory? (y/n) " -n 1 -r
+    # if they dont just exit
+    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+        echo "Exiting";
+        exit 1;    
+    else 
+        echo "Clearing current directory";
+        find . -mindepth 1 -delete;  # want to ensure hidden files are removed as well
+    fi
+fi
+
 # Check that .git is present
 if [ ! -d .git ]; then
     git init;
@@ -88,16 +103,15 @@ echo "include config/config.default.env" >> MANIFEST.in;
 echo "include config/config.default.yaml" >> MANIFEST.in;
 
 # make the package
-nbdev_prepare
+nbdev_prepare;
 
 # ensure the package is installed for dev testing
-python -m pip install -e '.[dev]'
+python -m pip install -e '.[dev]';
+
+# add all the files to git including hidden files
+git add .;
 
 # testing hello world works
-core_hello_world
+core_hello_world;
 
-git add *
-git add .*
-git commit -m "SSI nbdev automated setup"
-
-echo "Setup complete, you can now run add a destrination package"
+echo "Setup complete, you can now run add a destrination package";
