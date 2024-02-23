@@ -111,6 +111,8 @@ python -m pip install -e '.[dev]';
 # add all the files to git including hidden files
 git add .;
 
+echo "Files added to git, be sure to push them to a repo";
+
 # testing hello world works
 core_hello_world;
 
