@@ -76,6 +76,7 @@ echo "    core_hello_world=$GIT_REPO_NAME.core:hello_world" >> settings.ini;
 
 # replace the marker in the file $NBDEV_PROJECT_FOLDER/nbs/00_core.ipynb, it can occur multiple times
 sed -i '' "s/\$PACKAGE_NAME/$GIT_REPO_NAME/g" $NBDEV_PROJECT_FOLDER/nbs/00_core.ipynb;
+sed -i '' "s/\$PACKAGE_NAME/$GIT_REPO_NAME/g" $NBDEV_PROJECT_FOLDER/nbs/01_hello_world_example.ipynb;
 
 # make the value of GIT_REPO_NAME to all caps
 GIT_REPO_NAME_UPPER=$(echo $GIT_REPO_NAME | tr '[:lower:]' '[:upper:]');
