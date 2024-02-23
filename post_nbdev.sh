@@ -3,6 +3,23 @@
 # Ensure script fails on errors
 set -e
 
+# Check that the current folder is empty
+if [ "$(ls -A .)" ]; then
+    echo "Current directory is not empty, please run this in a blank directory"
+    # ask user if they want to clear current directory
+    read -p "Do you want to clear the current directory? (y/n) " -n 1 -r
+    # if they dont just exit
+    if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+        echo "";
+        echo "Exiting";
+        exit 1;    
+    else 
+        echo "";
+        echo "Clearing current directory";
+        find . -mindepth 1 -delete;  # want to ensure hidden files are removed as well
+    fi
+fi
+
 # Check that .git is present
 if [ ! -d .git ]; then
     git init;
@@ -61,7 +78,7 @@ nbdev_prepare; # also makes the package folder
 wget --directory $GIT_REPO_NAME/config https://raw.githubusercontent.com/$TEMPLATE_GIT_REPO/$TEMPLATE_GIT_BRANCH/config.default.env;
 wget --directory $GIT_REPO_NAME/config https://raw.githubusercontent.com/$TEMPLATE_GIT_REPO/$TEMPLATE_GIT_BRANCH/config.default.yaml; 
 wget -O $NBDEV_PROJECT_FOLDER/nbs/00_core.ipynb --directory nbs https://raw.githubusercontent.com/$TEMPLATE_GIT_REPO/$TEMPLATE_GIT_BRANCH/nbs/00_core.ipynb;
-wget -O $NBDEV_PROJECT_FOLDER/nbs/01_hello_world_example.ipynb --directory nbs https://raw.githubusercontent.com/$TEMPLATE_GIT_REPO/$TEMPLATE_GIT_BRANCH/nbs/01_hello_world_example.ipynb;
+wget -O $NBDEV_PROJECT_FOLDER/nbs/01_hello_world.ipynb --directory nbs https://raw.githubusercontent.com/$TEMPLATE_GIT_REPO/$TEMPLATE_GIT_BRANCH/nbs/01_hello_world.ipynb;
 wget -O $NBDEV_PROJECT_FOLDER/LICENSE https://raw.githubusercontent.com/$TEMPLATE_GIT_REPO/$TEMPLATE_GIT_BRANCH/LICENSE;
 wget -O $NBDEV_PROJECT_FOLDER/.gitignore https://raw.githubusercontent.com/$TEMPLATE_GIT_REPO/$TEMPLATE_GIT_BRANCH/.gitignore;
 
@@ -72,11 +89,12 @@ fi
 
 echo "requirements = fastcore python_dotenv envyaml" >> settings.ini;
 echo "console_scripts = " >> settings.ini;
-echo "    core_hello_world=$GIT_REPO_NAME.core:hello_world" >> settings.ini;
+echo "    core_hello_world=$GIT_REPO_NAME.core:cli" >> settings.ini;
+echo "    hello_two_world=$GIT_REPO_NAME.hello_world:cli" >> settings.ini;
 
 # replace the marker in the file $NBDEV_PROJECT_FOLDER/nbs/00_core.ipynb, it can occur multiple times
 sed -i '' "s/\$PACKAGE_NAME/$GIT_REPO_NAME/g" $NBDEV_PROJECT_FOLDER/nbs/00_core.ipynb;
-sed -i '' "s/\$PACKAGE_NAME/$GIT_REPO_NAME/g" $NBDEV_PROJECT_FOLDER/nbs/01_hello_world_example.ipynb;
+sed -i '' "s/\$PACKAGE_NAME/$GIT_REPO_NAME/g" $NBDEV_PROJECT_FOLDER/nbs/01_hello_world.ipynb;
 
 # make the value of GIT_REPO_NAME to all caps
 GIT_REPO_NAME_UPPER=$(echo $GIT_REPO_NAME | tr '[:lower:]' '[:upper:]');
@@ -88,16 +106,17 @@ echo "include config/config.default.env" >> MANIFEST.in;
 echo "include config/config.default.yaml" >> MANIFEST.in;
 
 # make the package
-nbdev_prepare
+nbdev_prepare;
 
 # ensure the package is installed for dev testing
-python -m pip install -e '.[dev]'
+python -m pip install -e '.[dev]';
 
-# testing hello world works
-core_hello_world
+# add all the files to git including hidden files
+git add .;
 
-git add *
-git add .*
-git commit -m "SSI nbdev automated setup"
+echo "Files added to git, be sure to push them to a repo";
 
-echo "Setup complete, you can now run add a destrination package"
+# testing hello world works with $GIT_USER_NAME but make sure it's passed as a string
+core_hello_world "$GIT_USER_NAME";
+
+echo "Setup complete, you can now run add a destrination package";
