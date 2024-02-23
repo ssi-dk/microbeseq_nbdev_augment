@@ -10,9 +10,11 @@ if [ "$(ls -A .)" ]; then
     read -p "Do you want to clear the current directory? (y/n) " -n 1 -r
     # if they dont just exit
     if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+        echo "";
         echo "Exiting";
         exit 1;    
     else 
+        echo "";
         echo "Clearing current directory";
         find . -mindepth 1 -delete;  # want to ensure hidden files are removed as well
     fi
