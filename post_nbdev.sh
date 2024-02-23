@@ -88,7 +88,7 @@ fi
 echo "requirements = fastcore python_dotenv envyaml" >> settings.ini;
 echo "console_scripts = " >> settings.ini;
 echo "    core_hello_world=$GIT_REPO_NAME.core:cli" >> settings.ini;
-echo "    hello_two_world=$GIT_REPO_NAME.hello_world_example:cli" >> settings.ini;
+echo "    hello_two_world=$GIT_REPO_NAME.hello_world:cli" >> settings.ini;
 
 # replace the marker in the file $NBDEV_PROJECT_FOLDER/nbs/00_core.ipynb, it can occur multiple times
 sed -i '' "s/\$PACKAGE_NAME/$GIT_REPO_NAME/g" $NBDEV_PROJECT_FOLDER/nbs/00_core.ipynb;
@@ -114,7 +114,7 @@ git add .;
 
 echo "Files added to git, be sure to push them to a repo";
 
-# testing hello world works
-core_hello_world $GIT_USER_NAME;
+# testing hello world works with $GIT_USER_NAME but make sure it's passed as a string
+core_hello_world "$GIT_USER_NAME";
 
 echo "Setup complete, you can now run add a destrination package";
