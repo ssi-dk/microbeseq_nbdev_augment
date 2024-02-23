@@ -69,12 +69,19 @@ wget -O $NBDEV_PROJECT_FOLDER/.gitignore https://raw.githubusercontent.com/$TEMP
 if [ "$(tail -n1 settings.ini | wc -l)" -eq "0" ] || [ "$(tail -n1 settings.ini | wc -c)" -ne "1" ]; then
   echo "" >> settings.ini
 fi
+
 echo "requirements = fastcore python_dotenv envyaml" >> settings.ini;
-echo "console_scripts = \
-    core_hello_world=$GIT_REPO_NAME.core:hello_world" >> settings.ini;
+echo "console_scripts = " >> settings.ini;
+echo "    core_hello_world=$GIT_REPO_NAME.core:hello_world" >> settings.ini;
 
 # replace the marker in the file $NBDEV_PROJECT_FOLDER/nbs/00_core.ipynb, it can occur multiple times
 sed -i '' "s/\$PACKAGE_NAME/$GIT_REPO_NAME/g" $NBDEV_PROJECT_FOLDER/nbs/00_core.ipynb;
+
+# make the value of GIT_REPO_NAME to all caps
+GIT_REPO_NAME_UPPER=$(echo $GIT_REPO_NAME | tr '[:lower:]' '[:upper:]');
+# for the config.default.env, adjust project name to the GIT_REPO_NAME.
+sed -i '' "s/PROJECTNAME/$GIT_REPO_NAME_UPPER/g" $NBDEV_PROJECT_FOLDER/$GIT_REPO_NAME/config/config.default.env;
+sed -i '' "s/PROJECTNAME/$GIT_REPO_NAME_UPPER/g" $NBDEV_PROJECT_FOLDER/$GIT_REPO_NAME/config/config.default.yaml;
 
 echo "include config/config.default.env" >> MANIFEST.in;
 echo "include config/config.default.yaml" >> MANIFEST.in;
