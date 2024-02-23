@@ -87,4 +87,17 @@ sed -i '' "s/PROJECTNAME/$GIT_REPO_NAME_UPPER/g" $NBDEV_PROJECT_FOLDER/$GIT_REPO
 echo "include config/config.default.env" >> MANIFEST.in;
 echo "include config/config.default.yaml" >> MANIFEST.in;
 
+# make the package
 nbdev_prepare
+
+# ensure the package is installed for dev testing
+python -m pip install -e '.[dev]'
+
+# testing hello world works
+core_hello_world
+
+git add *
+git add .*
+git commit -m "SSI nbdev automated setup"
+
+echo "Setup complete, you can now run add a destrination package"
