@@ -119,4 +119,9 @@ echo "Files added to git, be sure to push them to a repo";
 # testing hello world works with $GIT_USER_NAME but make sure it's passed as a string
 core_hello_world "$GIT_USER_NAME";
 
+# Create a default folder structure, if you adjust this adjust .gitignore as well where needed
+mdkir -p $NBDEV_PROJECT_FOLDER/input/; touch $NBDEV_PROJECT_FOLDER/input/.gitkeep;
+mdkir -p $NBDEV_PROJECT_FOLDER/output/; touch $NBDEV_PROJECT_FOLDER/output/.gitkeep;
+mkdir -p $NBDEV_PROJECT_FOLDER/config/; touch $NBDEV_PROJECT_FOLDER/config/.gitkeep;
+
 echo "Setup complete, you can now run add a destrination package";
