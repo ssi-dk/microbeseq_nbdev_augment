@@ -50,8 +50,8 @@ fi
 
 # Check for conda.dev.env.yaml and update conda env based on the branch, create the ./venv if it does not exist based off the file
 if [ ! -f conda.dev.env.yaml ]; then
-    echo "https://raw.githubusercontent.com/$TEMPLATE_GIT_REPO/$TEMPLATE_GIT_BRANCH/conda.dev.env.yaml"
-    wget https://raw.githubusercontent.com/$TEMPLATE_GIT_REPO/$TEMPLATE_GIT_BRANCH/conda.dev.env.yaml
+    echo "https://raw.githubusercontent.com/$TEMPLATE_GIT_REPO/$TEMPLATE_GIT_BRANCH/defaults/conda.dev.env.yaml"
+    wget https://raw.githubusercontent.com/$TEMPLATE_GIT_REPO/$TEMPLATE_GIT_BRANCH/defaults/conda.dev.env.yaml
     conda env create -p $CONDA_ENV_PATH -f conda.dev.env.yaml
 else
     # File exists, exit stating you should be in a blank directory
@@ -75,8 +75,8 @@ nbdev_new --repo $GIT_REPO_NAME --branch $TEMPLATE_GIT_BRANCH --user '$GIT_USER_
 nbdev_prepare; # also makes the package folder
 
 # Pull the files from the template repo
-wget --directory $GIT_REPO_NAME/config https://raw.githubusercontent.com/$TEMPLATE_GIT_REPO/$TEMPLATE_GIT_BRANCH/config.default.env;
-wget --directory $GIT_REPO_NAME/config https://raw.githubusercontent.com/$TEMPLATE_GIT_REPO/$TEMPLATE_GIT_BRANCH/config.default.yaml; 
+wget --directory $GIT_REPO_NAME/config https://raw.githubusercontent.com/$TEMPLATE_GIT_REPO/$TEMPLATE_GIT_BRANCH/defaults/config.default.env;
+wget --directory $GIT_REPO_NAME/config https://raw.githubusercontent.com/$TEMPLATE_GIT_REPO/$TEMPLATE_GIT_BRANCH/defaults/config.default.yaml; 
 wget -O $NBDEV_PROJECT_FOLDER/nbs/00_core.ipynb --directory nbs https://raw.githubusercontent.com/$TEMPLATE_GIT_REPO/$TEMPLATE_GIT_BRANCH/nbs/00_core.ipynb;
 wget -O $NBDEV_PROJECT_FOLDER/nbs/01_hello_world.ipynb --directory nbs https://raw.githubusercontent.com/$TEMPLATE_GIT_REPO/$TEMPLATE_GIT_BRANCH/nbs/01_hello_world.ipynb;
 wget -O $NBDEV_PROJECT_FOLDER/LICENSE https://raw.githubusercontent.com/$TEMPLATE_GIT_REPO/$TEMPLATE_GIT_BRANCH/LICENSE;
@@ -123,5 +123,6 @@ core_hello_world "$GIT_USER_NAME";
 mdkir -p $NBDEV_PROJECT_FOLDER/input/; touch $NBDEV_PROJECT_FOLDER/input/.gitkeep;
 mdkir -p $NBDEV_PROJECT_FOLDER/output/; touch $NBDEV_PROJECT_FOLDER/output/.gitkeep;
 mkdir -p $NBDEV_PROJECT_FOLDER/config/; touch $NBDEV_PROJECT_FOLDER/config/.gitkeep;
+wget -O $NBDEV_PROJECT_FOLDER/input/sample_sheet.tsv --directory input https://raw.githubusercontent.com/$TEMPLATE_GIT_REPO/$TEMPLATE_GIT_BRANCH/defaults/sample_sheet.tsv;
 
 echo "Setup complete, you can now run add a destrination package";
