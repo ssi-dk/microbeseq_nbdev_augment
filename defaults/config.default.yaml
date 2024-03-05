@@ -4,6 +4,6 @@
 # e.g
 # name: ${PROJECTNAME_NAME}
 example:
-    user_input:
+    input:
         name: ${PROJECTNAME_USER_INPUT_NAME}
         alternative_name: Lee
