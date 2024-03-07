@@ -111,10 +111,7 @@ nbdev_prepare;
 # ensure the package is installed for dev testing
 python -m pip install -e '.[dev]';
 
-# add all the files to git including hidden files
-git add .;
 
-echo "Files added to git, be sure to push them to a repo";
 
 # testing hello world works with $GIT_USER_NAME but make sure it's passed as a string
 core_hello_world "$GIT_USER_NAME";
@@ -124,5 +121,10 @@ mdkir -p $NBDEV_PROJECT_FOLDER/input/; touch $NBDEV_PROJECT_FOLDER/input/.gitkee
 mdkir -p $NBDEV_PROJECT_FOLDER/output/; touch $NBDEV_PROJECT_FOLDER/output/.gitkeep;
 mkdir -p $NBDEV_PROJECT_FOLDER/config/; touch $NBDEV_PROJECT_FOLDER/config/.gitkeep;
 wget -O $NBDEV_PROJECT_FOLDER/input/sample_sheet.tsv --directory input https://raw.githubusercontent.com/$TEMPLATE_GIT_REPO/$TEMPLATE_GIT_BRANCH/defaults/sample_sheet.tsv;
+
+# add all the files to git including hidden files
+git add .;
+
+echo "Files added to git, be sure to push them to a repo";
 
 echo "Setup complete, you can now run add a destrination package";
