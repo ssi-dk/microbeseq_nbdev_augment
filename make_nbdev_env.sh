@@ -32,6 +32,7 @@ if [ -z "$(git config user.name)" ] || [ -z "$(git config user.email)" ]; then
     echo "git config --global user.name 'Your Name'";
     echo "git config --global user.email 'Your email'";
     exit 1;
+fi
 
 NBDEV_VERSION="2.3.13"
 
