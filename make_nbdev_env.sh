@@ -70,7 +70,7 @@ fi
 source $NBDEV_PROJECT_FOLDER/.venv/bin/activate;
 
 # Check that nbdev is installed and at the right version, you can check the version of nbdev with pip show nbdev
-nbdev_version=$(pip show nbdev | grep Version | awk '{print $2}')
+nbdev_version=$(python -m pip show nbdev | grep Version | awk '{print $2}')
 if [[ $nbdev_version == $NBDEV_VERSION ]]; then
     echo "nbdev version is $NBDEV_VERSION"
 else
