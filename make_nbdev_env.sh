@@ -122,8 +122,8 @@ perl -pi -e "s/\$PACKAGE_NAME/$GIT_REPO_NAME/g" "$NBDEV_PROJECT_FOLDER/nbs/01_he
 # make the value of GIT_REPO_NAME to all caps
 GIT_REPO_NAME_UPPER=$(echo $GIT_REPO_NAME | tr '[:lower:]' '[:upper:]');
 # for the config.default.env, adjust project name to the GIT_REPO_NAME.
-perl -pi -e "s/PROJECTNAME/$GIT_REPO_NAME_UPPER/g" $NBDEV_PROJECT_FOLDER/$GIT_REPO_NAME/config/config.default.env;
-perl -pi -e "s/PROJECTNAME/$GIT_REPO_NAME_UPPER/g" $NBDEV_PROJECT_FOLDER/$GIT_REPO_NAME/config/config.default.yaml;
+perl -pi -e "s/PROJECTNAME/$GIT_REPO_NAME_UPPER/g" "$NBDEV_PROJECT_FOLDER/$GIT_REPO_NAME/config/config.default.env";
+perl -pi -e "s/PROJECTNAME/$GIT_REPO_NAME_UPPER/g" "$NBDEV_PROJECT_FOLDER/$GIT_REPO_NAME/config/config.default.yaml";
 
 echo "include config/config.default.env" >> MANIFEST.in;
 echo "include config/config.default.yaml" >> MANIFEST.in;
