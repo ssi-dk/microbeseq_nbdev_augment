@@ -10,13 +10,6 @@ then
     exit 1
 fi
 
-# Check for perl since we use perl for sed
-if ! command -v perl &> /dev/null
-then
-    echo "perl could not be found, please install perl before running this script"
-    exit 1
-fi
-
 # Check that the current folder is empty
 if [ "$(ls -A .)" ]; then
     echo "Current directory is not empty, please run this in a blank directory"
@@ -116,14 +109,21 @@ echo "    core_hello_world=$GIT_REPO_NAME.core:cli" >> settings.ini;
 echo "    hello_two_world=$GIT_REPO_NAME.hello_world:cli" >> settings.ini;
 
 # replace the marker in the file $NBDEV_PROJECT_FOLDER/nbs/00_core.ipynb, it can occur multiple times
-perl -pi -e "s/\$PACKAGE_NAME/$GIT_REPO_NAME/g" "$NBDEV_PROJECT_FOLDER/nbs/00_core.ipynb"
-perl -pi -e "s/\$PACKAGE_NAME/$GIT_REPO_NAME/g" "$NBDEV_PROJECT_FOLDER/nbs/01_hello_world.ipynb"
+
+sed "s/\$PACKAGE_NAME/$GIT_REPO_NAME/g" $NBDEV_PROJECT_FOLDER/nbs/00_core.ipynb > $NBDEV_PROJECT_FOLDER/nbs/00_core.ipynb.tmp;
+sed "s/\$PACKAGE_NAME/$GIT_REPO_NAME/g" $NBDEV_PROJECT_FOLDER/nbs/01_hello_world.ipynb > $NBDEV_PROJECT_FOLDER/nbs/01_hello_world.ipynb.tmp;
 
 # make the value of GIT_REPO_NAME to all caps
 GIT_REPO_NAME_UPPER=$(echo $GIT_REPO_NAME | tr '[:lower:]' '[:upper:]');
 # for the config.default.env, adjust project name to the GIT_REPO_NAME.
-perl -pi -e "s/PROJECTNAME/$GIT_REPO_NAME_UPPER/g" "$NBDEV_PROJECT_FOLDER/$GIT_REPO_NAME/config/config.default.env";
-perl -pi -e "s/PROJECTNAME/$GIT_REPO_NAME_UPPER/g" "$NBDEV_PROJECT_FOLDER/$GIT_REPO_NAME/config/config.default.yaml";
+sed "s/PROJECTNAME/$GIT_REPO_NAME_UPPER/g" $NBDEV_PROJECT_FOLDER/$GIT_REPO_NAME/config/config.default.env > $NBDEV_PROJECT_FOLDER/$GIT_REPO_NAME/config/config.default.env.tmp;
+sed "s/PROJECTNAME/$GIT_REPO_NAME_UPPER/g" $NBDEV_PROJECT_FOLDER/$GIT_REPO_NAME/config/config.default.yaml > $NBDEV_PROJECT_FOLDER/$GIT_REPO_NAME/config/config.default.yaml.tmp;
+
+# move the files back to the original
+mv $NBDEV_PROJECT_FOLDER/nbs/00_core.ipynb.tmp $NBDEV_PROJECT_FOLDER/nbs/00_core.ipynb;
+mv $NBDEV_PROJECT_FOLDER/nbs/01_hello_world.ipynb.tmp $NBDEV_PROJECT_FOLDER/nbs/01_hello_world.ipynb;
+mv $NBDEV_PROJECT_FOLDER/$GIT_REPO_NAME/config/config.default.env.tmp $NBDEV_PROJECT_FOLDER/$GIT_REPO_NAME/config/config.default.env;
+mv $NBDEV_PROJECT_FOLDER/$GIT_REPO_NAME/config/config.default.yaml.tmp $NBDEV_PROJECT_FOLDER/$GIT_REPO_NAME/config/config.default.yaml;
 
 echo "include config/config.default.env" >> MANIFEST.in;
 echo "include config/config.default.yaml" >> MANIFEST.in;
