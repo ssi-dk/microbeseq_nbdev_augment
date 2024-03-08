@@ -3,6 +3,13 @@
 # Ensure script fails on errors
 set -e
 
+# Check if quarto is installed and say it's a prereq if its not
+if ! command -v quarto &> /dev/null
+then
+    echo "quarto could not be found, please install quarto before running this script"
+    exit 1
+fi
+
 # Check that the current folder is empty
 if [ "$(ls -A .)" ]; then
     echo "Current directory is not empty, please run this in a blank directory"
