@@ -25,6 +25,14 @@ if [ ! -d .git ]; then
     git init;
 fi
 
+# Check that a git user.name is set and git user.email if either aren't set tell them how to do that and exit, remember I don't have access to the var yet
+# check if `git config user.name` or `git config user.email` is empty
+if [ -z "$(git config user.name)" ] || [ -z "$(git config user.email)" ]; then
+    echo "Please set your git user.name and git user.email, then clean out the directory and run again";
+    echo "git config --global user.name 'Your Name'";
+    echo "git config --global user.email 'Your email'";
+    exit 1;
+
 NBDEV_VERSION="2.3.13"
 
 # Get var for template_git_branch, if not set use main
