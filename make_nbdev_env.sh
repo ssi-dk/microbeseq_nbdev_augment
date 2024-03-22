@@ -125,11 +125,15 @@ mv $NBDEV_PROJECT_FOLDER/nbs/01_hello_world.ipynb.tmp $NBDEV_PROJECT_FOLDER/nbs/
 mv $NBDEV_PROJECT_FOLDER/$GIT_REPO_NAME/config/config.default.env.tmp $NBDEV_PROJECT_FOLDER/$GIT_REPO_NAME/config/config.default.env;
 mv $NBDEV_PROJECT_FOLDER/$GIT_REPO_NAME/config/config.default.yaml.tmp $NBDEV_PROJECT_FOLDER/$GIT_REPO_NAME/config/config.default.yaml;
 
-echo "include config/config.default.env" >> MANIFEST.in;
-echo "include config/config.default.yaml" >> MANIFEST.in;
+echo "include $GIT_REPO_NAME/config/config.default.env" >> MANIFEST.in;
+echo "include $GIT_REPO_NAME/config/config.default.yaml" >> MANIFEST.in;
 
 # make the package
 nbdev_prepare;
+
+# we use default configs in the package namespace, in order for this to work the default setup.py needs to be modified so that the reference to find_pac
+sed "s/find_packages(),/find_namespace_packages(),/g" setup.py > setup.py.tmp;
+mv setup.py.tmp setup.py;
 
 # ensure the package is installed for dev testing
 python -m pip install -e '.[dev]';
