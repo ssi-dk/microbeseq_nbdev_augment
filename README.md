@@ -14,3 +14,4 @@ mkdir PROJECT_NAME;
 cd PROJECT_NAME;
 bash ../make_nbdev_env.sh;
 ```
+If running the commands above didn't work, check the output, if it's telling you to do something do it to fix your problem. Otherwise there's additional debugging to do. To run again please remove the stuff in the PROJECT_NAME and run it again.
