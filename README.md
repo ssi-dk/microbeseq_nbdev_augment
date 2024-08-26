@@ -6,6 +6,7 @@ This repo contains a file `make_nbdev_env.sh` which can be run on the command li
 # Requirements
 - conda
 - git
+- quarto
 
 # Usage
 ```bash
