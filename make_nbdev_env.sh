@@ -68,13 +68,13 @@ else
     exit 1
 fi
 
+source $NBDEV_PROJECT_FOLDER/.venv/bin/activate
+
 # Check if quarto is installed and say it's a prereq if its not
 if ! command -v quarto &>/dev/null; then
     echo "quarto could not be found, please install quarto before running this script"
     exit 1
 fi
-
-source $NBDEV_PROJECT_FOLDER/.venv/bin/activate
 
 # Check that nbdev is installed and at the right version, you can check the version of nbdev with pip show nbdev
 nbdev_version=$(python -m pip show nbdev | grep Version | awk '{print $2}')
