@@ -103,7 +103,7 @@ if [ "$(tail -n1 settings.ini | wc -l)" -eq "0" ] || [ "$(tail -n1 settings.ini 
 fi
 
 echo "requirements = fastcore" >>settings.ini
-echo "pip_requirements = python_dotenv envyaml pandas" >>settings.ini
+echo "pip_requirements = python_dotenv envyaml pandas black" >>settings.ini
 echo "console_scripts = " >>settings.ini
 echo "    core_hello_world=$GIT_REPO_NAME.core:cli" >>settings.ini
 echo "    hello_two_world=$GIT_REPO_NAME.hello_world:cli" >>settings.ini
