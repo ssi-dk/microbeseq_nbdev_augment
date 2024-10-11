@@ -105,8 +105,7 @@ fi
 echo "requirements = fastcore" >>settings.ini
 echo "pip_requirements = python_dotenv envyaml pandas black" >>settings.ini
 echo "console_scripts = " >>settings.ini
-echo "    core_hello_world=$GIT_REPO_NAME.core:cli" >>settings.ini
-echo "    hello_two_world=$GIT_REPO_NAME.hello_world:cli" >>settings.ini
+echo "    hello_world=$GIT_REPO_NAME.hello_world:cli" >>settings.ini
 
 # replace the marker in the file $NBDEV_PROJECT_FOLDER/nbs/00_core.ipynb, it can occur multiple times
 
@@ -139,7 +138,7 @@ mv setup.py.tmp setup.py
 python -m pip install -e '.[dev]'
 
 # testing hello world works with $GIT_USER_NAME but make sure it's passed as a string
-core_hello_world "$GIT_USER_NAME"
+hello_world --name "$GIT_USER_NAME"
 
 # Create a default folder structure, if you adjust this adjust .gitignore as well where needed
 mkdir -p $NBDEV_PROJECT_FOLDER/input/
