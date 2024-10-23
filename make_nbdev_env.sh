@@ -112,6 +112,7 @@ echo "    hello_world=$GIT_REPO_NAME.hello_world:cli" >>settings.ini
 
 sed "s/\$PACKAGE_NAME/$GIT_REPO_NAME/g" $NBDEV_PROJECT_FOLDER/nbs/00_core.ipynb >$NBDEV_PROJECT_FOLDER/nbs/00_core.ipynb.tmp
 sed "s/\$PACKAGE_NAME/$GIT_REPO_NAME/g" $NBDEV_PROJECT_FOLDER/nbs/01_hello_world.ipynb >$NBDEV_PROJECT_FOLDER/nbs/01_hello_world.ipynb.tmp
+sed "s/\$PACKAGE_NAME/$GIT_REPO_NAME/g" $NBDEV_PROJECT_FOLDER/nbs/02_template.ipynb >$NBDEV_PROJECT_FOLDER/nbs/02_template.ipynb.tmp
 
 # make the value of GIT_REPO_NAME to all caps
 GIT_REPO_NAME_UPPER=$(echo $GIT_REPO_NAME | tr '[:lower:]' '[:upper:]')
@@ -122,6 +123,7 @@ sed "s/PROJECTNAME/$GIT_REPO_NAME_UPPER/g" $NBDEV_PROJECT_FOLDER/$GIT_REPO_NAME/
 # move the files back to the original
 mv $NBDEV_PROJECT_FOLDER/nbs/00_core.ipynb.tmp $NBDEV_PROJECT_FOLDER/nbs/00_core.ipynb
 mv $NBDEV_PROJECT_FOLDER/nbs/01_hello_world.ipynb.tmp $NBDEV_PROJECT_FOLDER/nbs/01_hello_world.ipynb
+mv $NBDEV_PROJECT_FOLDER/nbs/02_template.ipynb.tmp $NBDEV_PROJECT_FOLDER/nbs/02_template.ipynb
 mv $NBDEV_PROJECT_FOLDER/$GIT_REPO_NAME/config/config.default.env.tmp $NBDEV_PROJECT_FOLDER/$GIT_REPO_NAME/config/config.default.env
 mv $NBDEV_PROJECT_FOLDER/$GIT_REPO_NAME/config/config.default.yaml.tmp $NBDEV_PROJECT_FOLDER/$GIT_REPO_NAME/config/config.default.yaml
 
