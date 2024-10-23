@@ -138,7 +138,7 @@ mv setup.py.tmp setup.py
 python -m pip install -e '.[dev]'
 
 # testing hello world works with $GIT_USER_NAME but make sure it's passed as a string
-hello_world "$GIT_USER_NAME"
+hello_world --name "$GIT_USER_NAME"
 
 # Create a default folder structure, if you adjust this adjust .gitignore as well where needed
 mkdir -p $NBDEV_PROJECT_FOLDER/input/
