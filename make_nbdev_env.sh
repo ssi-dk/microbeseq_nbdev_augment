@@ -94,6 +94,7 @@ wget --directory $GIT_REPO_NAME/config https://raw.githubusercontent.com/$TEMPLA
 wget --directory $GIT_REPO_NAME/config https://raw.githubusercontent.com/$TEMPLATE_GIT_REPO/$TEMPLATE_GIT_BRANCH/defaults/config.default.yaml
 wget -O $NBDEV_PROJECT_FOLDER/nbs/00_core.ipynb --directory nbs https://raw.githubusercontent.com/$TEMPLATE_GIT_REPO/$TEMPLATE_GIT_BRANCH/nbs/00_core.ipynb
 wget -O $NBDEV_PROJECT_FOLDER/nbs/01_hello_world.ipynb --directory nbs https://raw.githubusercontent.com/$TEMPLATE_GIT_REPO/$TEMPLATE_GIT_BRANCH/nbs/01_hello_world.ipynb
+wget -O $NBDEV_PROJECT_FOLDER/nbs/02_template.ipynb --directory nbs https://raw.githubusercontent.com/$TEMPLATE_GIT_REPO/$TEMPLATE_GIT_BRANCH/nbs/02_template.ipynb
 wget -O $NBDEV_PROJECT_FOLDER/LICENSE https://raw.githubusercontent.com/$TEMPLATE_GIT_REPO/$TEMPLATE_GIT_BRANCH/LICENSE
 wget -O $NBDEV_PROJECT_FOLDER/.gitignore https://raw.githubusercontent.com/$TEMPLATE_GIT_REPO/$TEMPLATE_GIT_BRANCH/.gitignore
 
