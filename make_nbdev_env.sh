@@ -94,6 +94,7 @@ wget --directory $GIT_REPO_NAME/config https://raw.githubusercontent.com/$TEMPLA
 wget --directory $GIT_REPO_NAME/config https://raw.githubusercontent.com/$TEMPLATE_GIT_REPO/$TEMPLATE_GIT_BRANCH/defaults/config.default.yaml
 wget -O $NBDEV_PROJECT_FOLDER/nbs/00_core.ipynb --directory nbs https://raw.githubusercontent.com/$TEMPLATE_GIT_REPO/$TEMPLATE_GIT_BRANCH/nbs/00_core.ipynb
 wget -O $NBDEV_PROJECT_FOLDER/nbs/01_hello_world.ipynb --directory nbs https://raw.githubusercontent.com/$TEMPLATE_GIT_REPO/$TEMPLATE_GIT_BRANCH/nbs/01_hello_world.ipynb
+wget -O $NBDEV_PROJECT_FOLDER/nbs/02_template.ipynb --directory nbs https://raw.githubusercontent.com/$TEMPLATE_GIT_REPO/$TEMPLATE_GIT_BRANCH/nbs/02_template.ipynb
 wget -O $NBDEV_PROJECT_FOLDER/LICENSE https://raw.githubusercontent.com/$TEMPLATE_GIT_REPO/$TEMPLATE_GIT_BRANCH/LICENSE
 wget -O $NBDEV_PROJECT_FOLDER/.gitignore https://raw.githubusercontent.com/$TEMPLATE_GIT_REPO/$TEMPLATE_GIT_BRANCH/.gitignore
 
@@ -105,13 +106,13 @@ fi
 echo "requirements = fastcore" >>settings.ini
 echo "pip_requirements = python_dotenv envyaml pandas black" >>settings.ini
 echo "console_scripts = " >>settings.ini
-echo "    core_hello_world=$GIT_REPO_NAME.core:cli" >>settings.ini
-echo "    hello_two_world=$GIT_REPO_NAME.hello_world:cli" >>settings.ini
+echo "    hello_world=$GIT_REPO_NAME.hello_world:cli" >>settings.ini
 
 # replace the marker in the file $NBDEV_PROJECT_FOLDER/nbs/00_core.ipynb, it can occur multiple times
 
 sed "s/\$PACKAGE_NAME/$GIT_REPO_NAME/g" $NBDEV_PROJECT_FOLDER/nbs/00_core.ipynb >$NBDEV_PROJECT_FOLDER/nbs/00_core.ipynb.tmp
 sed "s/\$PACKAGE_NAME/$GIT_REPO_NAME/g" $NBDEV_PROJECT_FOLDER/nbs/01_hello_world.ipynb >$NBDEV_PROJECT_FOLDER/nbs/01_hello_world.ipynb.tmp
+sed "s/\$PACKAGE_NAME/$GIT_REPO_NAME/g" $NBDEV_PROJECT_FOLDER/nbs/02_template.ipynb >$NBDEV_PROJECT_FOLDER/nbs/02_template.ipynb.tmp
 
 # make the value of GIT_REPO_NAME to all caps
 GIT_REPO_NAME_UPPER=$(echo $GIT_REPO_NAME | tr '[:lower:]' '[:upper:]')
@@ -122,6 +123,7 @@ sed "s/PROJECTNAME/$GIT_REPO_NAME_UPPER/g" $NBDEV_PROJECT_FOLDER/$GIT_REPO_NAME/
 # move the files back to the original
 mv $NBDEV_PROJECT_FOLDER/nbs/00_core.ipynb.tmp $NBDEV_PROJECT_FOLDER/nbs/00_core.ipynb
 mv $NBDEV_PROJECT_FOLDER/nbs/01_hello_world.ipynb.tmp $NBDEV_PROJECT_FOLDER/nbs/01_hello_world.ipynb
+mv $NBDEV_PROJECT_FOLDER/nbs/02_template.ipynb.tmp $NBDEV_PROJECT_FOLDER/nbs/02_template.ipynb
 mv $NBDEV_PROJECT_FOLDER/$GIT_REPO_NAME/config/config.default.env.tmp $NBDEV_PROJECT_FOLDER/$GIT_REPO_NAME/config/config.default.env
 mv $NBDEV_PROJECT_FOLDER/$GIT_REPO_NAME/config/config.default.yaml.tmp $NBDEV_PROJECT_FOLDER/$GIT_REPO_NAME/config/config.default.yaml
 
@@ -139,7 +141,7 @@ mv setup.py.tmp setup.py
 python -m pip install -e '.[dev]'
 
 # testing hello world works with $GIT_USER_NAME but make sure it's passed as a string
-core_hello_world "$GIT_USER_NAME"
+hello_world --name "$GIT_USER_NAME"
 
 # Create a default folder structure, if you adjust this adjust .gitignore as well where needed
 mkdir -p $NBDEV_PROJECT_FOLDER/input/
